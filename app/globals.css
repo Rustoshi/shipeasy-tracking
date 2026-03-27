@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Mapbox — hide default attribution UI */
+.mapboxgl-ctrl-logo    { display: none !important; }
+.mapboxgl-ctrl-attrib  { display: none !important; }
+.mapboxgl-map          { font-family: inherit !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(128,128,128,0.3);
+  border-radius: 3px;
+}
+
+/* Print */
+@media print {
+  .no-print { display: none !important; }
+  body       { background: white !important; }
+  @page      { margin: 18mm 15mm; size: A4 portrait; }
+}
+
+/* ── Keyframe animations ── */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+/* Ship crossing viewport */
+@keyframes ship-cross {
+  0%   { transform: translateX(-400px) translateY(0px);   }
+  30%  { transform: translateX(25vw)   translateY(-6px);  }
+  60%  { transform: translateX(55vw)   translateY(-10px); }
+  100% { transform: translateX(110vw)  translateY(0px);   }
+}
+
+/* Plane crossing viewport */
+@keyframes plane-cross {
+  0%   { transform: translateX(-300px) translateY(10px)  rotate(-3deg); }
+  50%  { transform: translateX(50vw)   translateY(-20px) rotate(0deg);  }
+  100% { transform: translateX(110vw)  translateY(10px)  rotate(3deg);  }
+}
+
+/* Truck crossing viewport */
+@keyframes truck-cross {
+  from { transform: translateX(-300px); }
+  to   { transform: translateX(calc(100vw + 300px)); }
+}
+
+/* Pulsing marker rings */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+
+@keyframes pulse-core {
+  0%, 100% { transform: scale(1);    }
+  50%       { transform: scale(1.12); }
+}
+
+/* Route path draw */
+@keyframes draw-path {
+  from { stroke-dashoffset: 1200; }
+  to   { stroke-dashoffset: 0;    }
+}
+
+/* Floating particle */
+@keyframes float-up {
+  0%   { opacity: 0.5; transform: translateY(0)    scale(1);   }
+  100% { opacity: 0;   transform: translateY(-80px) scale(0.6); }
+}
+
+/* Count-up reveal */
+@keyframes count-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
