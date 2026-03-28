@@ -14,7 +14,7 @@ interface Props {
 export default async function RootPage({ searchParams }: Props) {
   const params = await searchParams
   // Subdomain in production, ?slug= query param in local dev
-  const slug = getSlugFromHeaders() ?? params.slug ?? null
+  const slug = (await getSlugFromHeaders()) ?? params.slug ?? null
 
   if (!slug) {
     return (
@@ -35,10 +35,12 @@ export default async function RootPage({ searchParams }: Props) {
         <div style={{ fontSize: 18, fontWeight: 700 }}>
           No company found
         </div>
-        <div style={{ fontSize: 13, opacity: 0.4, maxWidth: 360 }}>
-          Visit this page with a company slug.<br />
-          Local dev: <code>http://localhost:3001?slug=yourslug</code>
-        </div>
+        {process.env.NODE_ENV !== 'production' && (
+          <div style={{ fontSize: 13, opacity: 0.4, maxWidth: 360 }}>
+            Visit this page with a company slug.<br />
+            Local dev: <code>http://localhost:3001?slug=yourslug</code>
+          </div>
+        )}
       </div>
     )
   }

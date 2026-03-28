@@ -9,9 +9,9 @@ export function getSlugFromHost(host: string): string | null {
   return slug
 }
 
-export function getSlugFromHeaders(): string | null {
+export async function getSlugFromHeaders(): Promise<string | null> {
   try {
-    const headersList = headers() as unknown as { get: (name: string) => string | null }
+    const headersList = await headers()
 
     // Check middleware-injected header first (production subdomain)
     const injected = headersList.get('x-company-slug')

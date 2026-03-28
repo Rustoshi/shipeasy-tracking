@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic'
 export default async function ReceiptPage({ params, searchParams }: Props) {
   const { trackingId } = await params
   const search = await searchParams
-  const slug = getSlugFromHeaders() ?? search.slug ?? null
+  const slug = (await getSlugFromHeaders()) ?? search.slug ?? null
   if (!slug) return notFound()
 
   const [company, data] = await Promise.all([

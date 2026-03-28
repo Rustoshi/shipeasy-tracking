@@ -15,7 +15,7 @@ interface Props {
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { trackingId } = await params
   const search = await searchParams
-  const slug    = getSlugFromHeaders() ?? search.slug ?? null
+  const slug    = (await getSlugFromHeaders()) ?? search.slug ?? null
   const company = slug ? await getCompanyBySlug(slug) : null
   return {
     title:  `Track ${trackingId}${company ? ` — ${company.name}` : ''}`,
@@ -29,7 +29,7 @@ export const revalidate = 0
 export default async function TrackPage({ params, searchParams }: Props) {
   const { trackingId } = await params
   const search = await searchParams
-  const slug = getSlugFromHeaders() ?? search.slug ?? null
+  const slug = (await getSlugFromHeaders()) ?? search.slug ?? null
   if (!slug) return notFound()
 
   const [company, data] = await Promise.all([
