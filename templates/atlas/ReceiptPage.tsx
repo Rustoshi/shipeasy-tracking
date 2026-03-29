@@ -6,6 +6,7 @@ import type {
   PublicShipment,
   PublicShipmentHistory,
 } from '@/types'
+import Barcode from '../shared/Barcode'
 
 interface Props {
   company:  CompanyBranding
@@ -442,6 +443,66 @@ export default function AtlasReceiptPage({
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* ════════════════════════════════════════════════
+            BARCODE
+        ════════════════════════════════════════════════ */}
+        <div style={{
+          marginBottom:   24,
+          padding:        '16px 0',
+          display:        'flex',
+          alignItems:     'center',
+          justifyContent: 'space-between',
+          gap:            32,
+          borderTop:      '1px solid #f3f4f6',
+          borderBottom:   '1px solid #f3f4f6',
+        }}>
+          {/* Left: barcode */}
+          <div style={{ flex: '0 0 auto' }}>
+            <Barcode
+              value={shipment.trackingId}
+              width={1.8}
+              height={56}
+            />
+          </div>
+
+          {/* Right: shipment reference info */}
+          <div style={{
+            flex:      1,
+            textAlign: 'right',
+          }}>
+            <div style={{
+              fontFamily:    "'Nunito Sans', sans-serif",
+              fontSize:      9,
+              fontWeight:    700,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color:         '#9ca3af',
+              marginBottom:  6,
+            }}>
+              Shipment Reference
+            </div>
+            <div style={{
+              fontFamily:    "'JetBrains Mono', monospace",
+              fontSize:      18,
+              fontWeight:    700,
+              color:         '#f97316',
+              letterSpacing: '0.04em',
+              marginBottom:  4,
+            }}>
+              {shipment.trackingId}
+            </div>
+            <div style={{
+              fontFamily: "'Nunito Sans', sans-serif",
+              fontSize:   12,
+              color:      '#6b7280',
+              lineHeight: 1.6,
+            }}>
+              {shipment.originCountry} → {shipment.destinationCountry}<br/>
+              Issued: {formatDateShort(shipment.createdAt)}
+            </div>
           </div>
         </div>
 
